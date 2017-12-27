@@ -26,6 +26,14 @@ export function getDeck(title) {
         })
 }
 
-export function addCardToDeck() {
-
+export function addCardToDeck(title, card) {
+    return AsyncStorage.getItem(MOBILE_FLASHCARD_STORAGE_KEY)
+        .then((results) => {
+            let deck = JSON.parse(results)[title]
+            deck.questions.push(card)
+            AsyncStorage.mergeItem(MOBILE_FLASHCARD_STORAGE_KEY,
+                JSON.stringify({
+                    [title]:deck
+                }))
+        })
 }
