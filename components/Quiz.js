@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { red, green, white } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/notification';
 
 class Quiz extends Component {
     state = {
         showAnswer: false,
         questionPoint: 0,
         score: 0
+    }
+
+    componentDidMount() {
+        clearLocalNotification().then(setLocalNotification())
     }
 
     showAnswer(){

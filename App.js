@@ -15,6 +15,7 @@ import {createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import reducer from './reducers'
+import { setLocalNotification } from './utils/notification'
 
 function FlashCardsStatusBar ({backgroundColor, ...props}) {
   return (
@@ -25,6 +26,10 @@ function FlashCardsStatusBar ({backgroundColor, ...props}) {
 }
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+  
   render() {
     return (
       <Provider store={createStore(reducer)}>
