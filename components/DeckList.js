@@ -15,7 +15,7 @@ class DeckList extends Component {
 
     componentDidMount() {
         getDecks().then((decks) => {
-            this.setState({ decks: JSON.parse(decks) })
+            this.setState({ decks: decks })
         })
     }
 
@@ -30,9 +30,9 @@ class DeckList extends Component {
                             <TouchableOpacity style={[styles.deckItem, {'backgroundColor':white} ]}
                             onPress={() => this.props.navigation.navigate(
                                 'DeckDetail',
-                                {deckTitle: deck}
+                                {title: decks[deck].title}
                             )} key={index}>
-                                    <Text style={styles.title}>{deck}</Text>
+                                    <Text style={styles.title}>{decks[deck].title}</Text>
                                     <Text>({decks[deck].questions.length}) cards</Text>
                             </TouchableOpacity>
                         )
@@ -52,12 +52,10 @@ const styles = StyleSheet.create({
         paddingBottom: 20
     },
     deckItem: {
-        // flex: 1,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: gray,
         paddingBottom: 20
-        // justifyContent: 'center',
     }
   });
 
