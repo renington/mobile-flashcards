@@ -16,12 +16,12 @@ class NewDeck extends Component {
 
     onSubmit() {
         if(this.state.deckTitle !== ''){
-            // saveDeckTitle(this.state.deckTitle)
-            console.log('save',this.state.deckTitle)
+            saveDeckTitle(this.state.deckTitle)
+            // console.log('save',this.state.deckTitle)
 
             this.props.navigation.navigate(
                 'DeckDetail',
-                // {name: this.state.text}
+                {deckTitle: this.state.deckTitle}
             )
 
             this.setState({ deckTitle: '' })
