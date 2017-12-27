@@ -12,7 +12,6 @@ class DeckDetail extends Component {
             deck: null
         }
     }
-
     
     componentDidMount() {
         const { title } = this.props.navigation.state.params
@@ -31,7 +30,12 @@ class DeckDetail extends Component {
                     <Text style={styles.title}>{deck.title}</Text>
                     <Text style={[styles.title, {fontSize: 14, paddingTop: 0, paddingBottom: 10}]}>({deck.questions.length}) cards</Text>
         
-                    <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } >
+                    <TouchableOpacity 
+                        style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } 
+                         onPress={() => this.props.navigation.navigate(
+                            'NewCard',
+                            {title: deck.title}
+                        )}>
                         <Text style = {styles.submitBtnText}>ADD CARD</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } >
