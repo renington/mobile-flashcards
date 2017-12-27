@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform } from 'react-native'
+import { connect } from 'react-redux'
 
 import { styles } from '../utils/styles'
 import { addCardToDeck } from '../utils/api'
+import { addCard } from '../actions'
 
 class NewCard extends Component {
     constructor(props){
@@ -25,11 +27,17 @@ class NewCard extends Component {
     onSubmit = () => {
         if(this.state.question !== '' && this.state.answer !== ''){
             const card = { question : this.state.question, answer: this.state.answer }
+            
+            this.props.dispatch( addCard({   
+                title: this.state.title,
+                card,
+            }))
+
             addCardToDeck(this.state.title, card)
 
             this.props.navigation.navigate(
                 'DeckDetail',
-                {title: this.state.title}
+                { title: this.state.title }
             )
 
             this.clearState()
@@ -75,4 +83,4 @@ class NewCard extends Component {
     }
 }
 
-export default NewCard
+export default connect()(NewCard)

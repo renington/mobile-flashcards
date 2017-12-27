@@ -11,6 +11,11 @@ import DeckDetail from './components/DeckDetail'
 import NewCard from './components/NewCard'
 import Quiz from './components/Quiz'
 
+import {createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+import reducer from './reducers'
+
 function FlashCardsStatusBar ({backgroundColor, ...props}) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -22,10 +27,12 @@ function FlashCardsStatusBar ({backgroundColor, ...props}) {
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <FlashCardsStatusBar backgroundColor={red} barStyle="light-content" />
-        <MainNav />
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={styles.container}>
+          <FlashCardsStatusBar backgroundColor={red} barStyle="light-content" />
+          <MainNav />
+        </View>
+      </Provider>
     );
   }
 }

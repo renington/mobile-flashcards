@@ -1,51 +1,34 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
+import { connect } from 'react-redux'
 
 import { getDeck } from '../utils/api'
 import { red, white } from '../utils/colors'
 
-class DeckDetail extends Component {
-    constructor(props){
-        super(props)
+const DeckDetail = (props) => {
+    const { deck, navigation } = props
 
-        this.state = {
-            deck: null
-        }
-    }
+    if(deck !== null){
+        return (
+            <View>
+                <Text style={styles.title}>{deck.title}</Text>
+                <Text style={[styles.title, {fontSize: 14, paddingTop: 0, paddingBottom: 10}]}>({deck.questions.length}) cards</Text>
     
-    componentDidMount() {
-        const { title } = this.props.navigation.state.params
-
-        getDeck(title).then((deck) => {
-            this.setState({ deck: deck })
-        })
-    }
-    
-    render(){
-        const { deck } = this.state
-
-        if(deck !== null){
-            return (
-                <View>
-                    <Text style={styles.title}>{deck.title}</Text>
-                    <Text style={[styles.title, {fontSize: 14, paddingTop: 0, paddingBottom: 10}]}>({deck.questions.length}) cards</Text>
-        
-                    <TouchableOpacity 
-                        style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } 
-                         onPress={() => this.props.navigation.navigate(
-                            'NewCard',
-                            {title: deck.title}
-                        )}>
-                        <Text style = {styles.submitBtnText}>ADD CARD</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } >
-                        <Text style = {styles.submitBtnText}>START QUIZ</Text>
-                    </TouchableOpacity>
-                </View>
-            )
-        }else{
-            return <Text>Loading ...</Text>
-        }
+                <TouchableOpacity 
+                    style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } 
+                        onPress={() => navigation.navigate(
+                        'NewCard',
+                        {title: deck.title}
+                    )}>
+                    <Text style = {styles.submitBtnText}>ADD CARD</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } >
+                    <Text style = {styles.submitBtnText}>START QUIZ</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }else{
+        return <Text>Loading ...</Text>
     }
 }
 
@@ -84,6 +67,14 @@ const styles = StyleSheet.create({
         fontSize: 22,
         textAlign: 'center',
     },
-  });
+});
 
-export default DeckDetail
+const mapStateToProps = (decks, navigation) => {
+    return {
+      deck: Object.keys(decks).map((title) => (
+        decks[title]
+      )).filter((deck) => (deck.title === navigation.navigation.state.params.title))[0]
+    }
+}
+
+export default connect(mapStateToProps)(DeckDetail)

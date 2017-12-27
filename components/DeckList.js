@@ -1,26 +1,20 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 
 import { getDecks } from '../utils/api'
 import { white, gray } from '../utils/colors'
+import { fetchDecks } from '../actions'
 
 class DeckList extends Component {
-    constructor(props){
-        super(props)
-
-        this.state = {
-            decks: null
-        }
-    }
-
     componentDidMount() {
         getDecks().then((decks) => {
-            this.setState({ decks: decks })
+            this.props.dispatch(fetchDecks(decks))
         })
     }
 
     render() {
-        const { decks } = this.state
+        const { decks } = this.props
 
         if(decks !== null){
             return (
@@ -57,6 +51,7 @@ const styles = StyleSheet.create({
         borderColor: gray,
         paddingBottom: 20
     }
-  });
+});
 
-export default DeckList
+const mapStateToProps = (decks) => ({ decks })
+export default connect(mapStateToProps)(DeckList)

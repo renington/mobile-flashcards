@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform } from 'react-native'
+import { connect } from 'react-redux'
 
 import { saveDeckTitle, addCardToDeck  } from '../utils/api'
 import { red, white } from '../utils/colors'
+import { addDeck } from '../actions'
 
 class NewDeck extends Component {
     constructor(props){
@@ -16,15 +18,21 @@ class NewDeck extends Component {
 
     onSubmit() {
         if(this.state.deckTitle !== ''){
+            //UPDATE REDUX WITH CURRENT STATE
+            this.props.dispatch( addDeck({
+                [this.state.deckTitle]:{
+                    title: this.state.deckTitle,
+                    questions:[],
+                }
+            }))
+
+            //UPDATE DB(LOCALSTORAGE)
             saveDeckTitle(this.state.deckTitle)
-            // console.log('save',this.state.deckTitle)
 
             this.props.navigation.navigate(
                 'DeckDetail',
-                {deckTitle: this.state.deckTitle}
+                {title: this.state.deckTitle}
             )
-
-            this.setState({ deckTitle: '' })
         }else{
             this.setState({ error: 'Input empty. Type a text.' })
         }
@@ -87,4 +95,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default NewDeck
+export default connect()(NewDeck)
