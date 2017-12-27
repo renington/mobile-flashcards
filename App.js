@@ -76,11 +76,8 @@ const MainNav =  StackNavigator({
   NewCard: {
       screen: NewCard
   },
-  QuizView: {
-      screen: Quiz,
-      navigationOptions: {
-          title: 'Quiz',
-      }
+  Quiz: {
+      screen: Quiz
   }
 })
 

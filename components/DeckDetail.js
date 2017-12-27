@@ -22,8 +22,13 @@ const DeckDetail = (props) => {
                     )}>
                     <Text style = {styles.submitBtnText}>ADD CARD</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } >
-                    <Text style = {styles.submitBtnText}>START QUIZ</Text>
+                <TouchableOpacity 
+                    style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } 
+                    onPress={() => navigation.navigate(
+                        'Quiz',
+                        {title: deck.title}
+                    )}>
+                    <Text style = {styles.submitBtnText}>GO STUDY</Text>
                 </TouchableOpacity>
             </View>
         )
