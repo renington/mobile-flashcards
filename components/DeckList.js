@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+
 import { getDecks } from '../utils/api'
+import { white, gray } from '../utils/colors'
 
 class DeckList extends Component {
     constructor(props){
@@ -25,10 +27,14 @@ class DeckList extends Component {
                 <View>
                     {Object.keys(decks).map((deck, index) => {
                         return (
-                            <View key={index}>
-                                <Text style={styles.title}>{deck}</Text>
-                                <Text>({decks[deck].questions.length}) cards</Text>
-                            </View>
+                            <TouchableOpacity style={[styles.deckItem, {'backgroundColor':white} ]}
+                            onPress={() => this.props.navigation.navigate(
+                                'DeckDetail',
+                                {deckTitle: deck}
+                            )} key={index}>
+                                    <Text style={styles.title}>{deck}</Text>
+                                    <Text>({decks[deck].questions.length}) cards</Text>
+                            </TouchableOpacity>
                         )
                     })}
                 </View>
@@ -45,6 +51,14 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingBottom: 20
     },
+    deckItem: {
+        // flex: 1,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: gray,
+        paddingBottom: 20
+        // justifyContent: 'center',
+    }
   });
 
 export default DeckList
