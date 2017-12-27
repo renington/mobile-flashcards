@@ -49,7 +49,6 @@ export function setLocalNotification () {
     });
 }
 
-
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(MOBILE_FLASHCARDS_NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync())
