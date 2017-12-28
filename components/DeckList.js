@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-nati
 import { connect } from 'react-redux'
 
 import { getDecks } from '../utils/api'
-import { white, gray } from '../utils/colors'
+import { white, gray, blue } from '../utils/colors'
 import { fetchDecks } from '../actions'
 
 class DeckList extends Component {
@@ -28,7 +28,7 @@ class DeckList extends Component {
                                     {title: decks[deck].title}
                                 )} key={index}>
                                         <Text style={styles.title}>{decks[deck].title}</Text>
-                                        <Text>({decks[deck].questions.length}) cards</Text>
+                                        <Text style={styles.deckItemCard}>({decks[deck].questions.length}) cards</Text>
                                 </TouchableOpacity>
                             )
                         })}
@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: gray,
         paddingBottom: 20
+    },
+    deckItemCard: {
+        color: blue
     }
 });
 

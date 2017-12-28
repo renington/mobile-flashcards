@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { saveDeckTitle, addCardToDeck  } from '../utils/api'
 import { red, white } from '../utils/colors'
 import { addDeck } from '../actions'
+import { styles } from '../utils/styles'
 
 class NewDeck extends Component {
     constructor(props){
@@ -40,15 +41,17 @@ class NewDeck extends Component {
 
     render() {
         return (
-            <View>
-                <Text style={styles.title}>What is the title of your new deck?</Text>
-                <TextInput
-                    style={{height: 50,width:150, fontSize: 12, borderColor: 'gray', borderWidth: 1, padding: 10}}
-                    value={this.state.deckTitle}
-                    onChangeText={ (text) => this.setState({deckTitle: text, error: ''}) }
-                    placeholder="Deck Name"
-                    />
+            <View >
+                <View style={styles.flashcard} >
+                    <Text style={styles.title}>What is the title of your new deck?</Text>
+                    <TextInput
+                        style={{height: 60,width:300, fontSize: 12, borderColor: 'gray', borderWidth: 1, padding: 10}}
+                        value={this.state.deckTitle}
+                        onChangeText={ (text) => this.setState({deckTitle: text, error: ''}) }
+                        placeholder="Deck Name"
+                        />
                     <Text style={styles.error}>{this.state.error}</Text>
+                </View>
                 <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } onPress={this.onSubmit} >
                     <Text style = {styles.submitBtnText}>ADD DECK</Text>
                 </TouchableOpacity>
@@ -56,43 +59,5 @@ class NewDeck extends Component {
         )
     }
 }
-
-
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        paddingTop: 20,
-        paddingBottom: 20
-    },
-    error: {
-        fontSize: 10,
-        color: red
-    },
-    iosSubmitBtn: {
-        backgroundColor: red,
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginLeft: 40,
-        marginRight: 40,
-    },
-    AndroidSubmitBtn: {
-        backgroundColor: red,
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        height: 45,
-        borderRadius: 2,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    submitBtnText: {
-        color: white,
-        fontSize: 22,
-        textAlign: 'center',
-    },
-  });
 
 export default connect()(NewDeck)

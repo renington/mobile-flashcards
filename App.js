@@ -46,7 +46,7 @@ const Tabs = TabNavigator({
   Deck: {
     screen: DeckList,
     navigationOptions: {
-      headerTitle: 'Deck',
+      headerTitle: 'DECKS',
       tabBarLabel: 'Decks',
       tabBarIcon: ({ focused }) => (
         <Ionicons
@@ -59,8 +59,8 @@ const Tabs = TabNavigator({
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      headerTitle: 'NewDeck',
-      tabBarLabel: 'NewDeck',
+      headerTitle: 'New Deck',
+      tabBarLabel: 'Add a Deck',
       tabBarIcon: ({ focused }) => (
         <Ionicons
           name={focused ? 'ios-create' : 'ios-create-outline'}
@@ -76,13 +76,22 @@ const MainNav =  StackNavigator({
       screen: Tabs
   },
   DeckDetail: {
-      screen: DeckDetail
+      screen: DeckDetail,
+      navigationOptions: {
+        headerTitle: 'DECK',
+      }
   },
   NewCard: {
-      screen: NewCard
+      screen: NewCard,
+      navigationOptions: {
+        headerTitle: 'NEW CARD',
+      }
   },
   Quiz: {
-      screen: Quiz
+      screen: Quiz,
+      navigationOptions: {
+        headerTitle: 'STUDY',
+      }
   }
 })
 

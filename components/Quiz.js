@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
+
 import { red, green, white } from '../utils/colors'
-import { clearLocalNotification, setLocalNotification } from '../utils/notification';
+import { styles } from '../utils/styles'
+import { clearLocalNotification, setLocalNotification } from '../utils/notification'
 
 class Quiz extends Component {
     state = {
@@ -32,7 +34,9 @@ class Quiz extends Component {
                 <View>
                     {total === 0 ?
                     <View>
-                        <Text>NO CARDS</Text>
+                        <View style={styles.flashcard} >
+                            <Text style={styles.textScore}>NO CARDS</Text>
+                        </View>
                         <TouchableOpacity 
                             style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } 
                                 onPress={() => navigation.navigate(
@@ -44,8 +48,11 @@ class Quiz extends Component {
                     </View>
                     :
                     <View>
-                        <Text>CARDS: {total}</Text>
-                        <Text>SCORE: {score}</Text>
+                        <View style={styles.score} >
+                            <Text style={styles.textScore}>CARDS: {total}</Text>
+                            <Text style={styles.textScore}>SCORE: {score}</Text>
+                        </View>
+                        
                         <TouchableOpacity 
                             style={ [Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn, {backgroundColor: green}] } 
                             onPress={() => this.setState({ showAnswer: false, questionPoint: 0, score: 0 })}>
@@ -66,9 +73,14 @@ class Quiz extends Component {
         }else{
             return (
                 <View>
-                    <Text>({questionPoint+1}/{total}) cards</Text>
-                    <Text style={styles.question}>{card.question}</Text>
-                    
+                    <View style={styles.containerCounter} >
+                        <Text style={styles.counter}>{questionPoint+1} of {total} cards</Text>
+                    </View>
+
+                    <View style={styles.flashcard} >
+                        <Text style={styles.question}>{card.question}</Text>
+                    </View>
+
                     { !this.state.showAnswer ?
                         <TouchableOpacity 
                             style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } 
@@ -77,7 +89,9 @@ class Quiz extends Component {
                         </TouchableOpacity>
                     :
                         <View>
-                            <Text style={styles.question}>{card.answer}</Text>
+                            <View style={styles.flashcard} >
+                                <Text style={styles.question}>{card.answer}</Text>
+                            </View>
     
                             <TouchableOpacity 
                                 style={ [Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn, {backgroundColor: green}] } 
@@ -97,43 +111,6 @@ class Quiz extends Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    question: {
-        fontSize: 18,
-        paddingTop: 20,
-        paddingBottom: 10,
-        textAlign: 'center'
-    },
-    iosSubmitBtn: {
-        backgroundColor: red,
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    AndroidSubmitBtn: {
-        backgroundColor: red,
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        height: 45,
-        borderRadius: 2,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    submitBtnText: {
-        color: white,
-        fontSize: 22,
-        textAlign: 'center',
-    },
-});
 
 const mapStateToProps = (decks, navigation) => {
     return {

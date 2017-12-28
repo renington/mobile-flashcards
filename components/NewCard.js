@@ -54,31 +54,33 @@ class NewCard extends Component {
         const { title } = this.state
 
         return (
-            <View style={{ flex: 1, alignItems: 'center'}}>
+            <View style={{ flex: 1, alignItems: 'center', marginTop: 20}}>
                 <Text style={[{fontSize: 20}]}>New FlashCard in {title}</Text>
                 
-                <Text>Front</Text>
-                <TextInput
-                    style={{height: 50,width:150, fontSize: 12, borderColor: 'gray', borderWidth: 1, padding: 10}}
-                    value={this.state.question}
-                    onChangeText={ (question) => this.setState({question: question, error: ''}) }
-                    placeholder="Question!?"
-                />
-    
-                <Text>Back</Text>
-                <TextInput
-                    style={{height: 50,width:150, fontSize: 12, borderColor: 'gray', borderWidth: 1, padding: 10}}
-                    value={this.state.answer}
-                    onChangeText={ (answer) => this.setState({answer: answer, error: ''}) }
-                    placeholder="Answer"
-                />
+                <View style={styles.flashcard} >
+                    <Text>Front</Text>
+                    <TextInput
+                        style={{height: 80,width:300, fontSize: 12, borderColor: 'gray', borderWidth: 1, padding: 10}}
+                        value={this.state.question}
+                        onChangeText={ (question) => this.setState({question: question, error: ''}) }
+                        placeholder="Question!?"
+                    />
+                </View>
+                <View style={styles.flashcard}>
+                    <Text>Back</Text>
+                    <TextInput
+                        style={{height: 80,width:300, fontSize: 12, borderColor: 'gray', borderWidth: 1, padding: 10}}
+                        value={this.state.answer}
+                        onChangeText={ (answer) => this.setState({answer: answer, error: ''}) }
+                        placeholder="Answer"
+                    />
+                </View>
 
                 <Text style={styles.error}>{this.state.error}</Text>
                 <TouchableOpacity style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn } onPress={this.onSubmit} >
                     <Text style = {styles.submitBtnText}>ADD CARD</Text>
                 </TouchableOpacity>
             </View>
-    
         )
     }
 }
